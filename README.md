@@ -1,4 +1,11 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+ecommerce con las siguientes paginas
+
+Home: Listado de 4 productos. Mostrar nombre, precio, sku, descripcion
+Detalle de producto: Nombre del producto, descripción, precio, sku
+Registro
+Login
+
+Se utiliza Reactjs con Hooks y Firebase como backend
 
 ## Available Scripts
 
