@@ -1,11 +1,12 @@
 ecommerce con las siguientes paginas
 
-Home: Listado de 4 productos. Mostrar nombre, precio, sku, descripcion
+Home: Listado de 4 productos. 
+Mostrar nombre, precio, sku, descripcion
 Detalle de producto: Nombre del producto, descripción, precio, sku
 Registro
 Login
 
-Se utiliza Reactjs con Hooks y Firebase como backend
+Se utiliza Reactjs con hooks y Firebase como backend
 
 ## Available Scripts
 
