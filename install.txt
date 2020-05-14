@@ -1,0 +1,8 @@
+npm install react-bootstrap bootstrap
+npm install react-hook-form
+npm install --save firebase
+npm install --save react-router
+npm install --save react-router-dom
+npm install axios
+
+**npm cache clean --force
