@@ -51,7 +51,11 @@ footer{
    text-align: center;
    clear: both;
     bottom: 0;
-    background-color: whitesmoke;
+    background-color: #5389b5;
+    color:white
+}
+.footer a {
+  color:white
 }
 
 .imglkn
@@ -68,6 +72,7 @@ margin:20px;
   float: left;
   padding: 20px;
   font-size: 12px;
+  font-weight: bolder;
 }
 .error
 {
@@ -81,3 +86,14 @@ margin:20px;
     height: 15vw;
     object-fit: cover;
 }*/
+
+
+
+@media screen and (min-width: 1024px) {
+  .DivHeight{
+      height:50px;
+  }
+  .card-body {
+    height: 150px;
+  }
+}

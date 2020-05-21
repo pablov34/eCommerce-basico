@@ -1,44 +1,52 @@
 import React, {useEffect, useState} from 'react';
-import Navbar from 'react-bootstrap/Navbar'
-import Nav from 'react-bootstrap/Nav'
-import NavDropdown from 'react-bootstrap/NavDropdown'
+import {Navbar, Nav} from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import { getMenu } from '../utils/auth';
+import NetContext from '../context/NetContext';
 
 function Menu(props)
 { 
-  const [loading, setLoading] = useState(true);
-  const [menu, setMenu] = useState([]);
-
   useEffect(()=>{
     console.log('MENU componentDidMount - hook equivalente');
-    setMenu(getMenu());
-    setLoading(false);
 }, []
 );
  
 useEffect(()=>{
   console.log('MENU componentDidUpdate - hook equivalente');
-  setMenu(getMenu());
-  setLoading(false);
 }, [props.isautenticado]); 
 
 return(
-<Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-<Link to={`/`}><Navbar.Brand href="#home">Home</Navbar.Brand></Link>
-  <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-  <Navbar.Collapse id="responsive-navbar-nav">
-    <Nav className="mr-auto"> 
-    {loading ? "loading": 
-        menu.map((menuitem)=>
-       <Link to={`${menuitem.path}`}><Nav.Link href='#admin'>{`${menuitem.text}`}</Nav.Link></Link> )      
-    }
-    </Nav>
-    <Nav>
-      <Nav.Link href="#deets">{props.isautenticado ? "Bienvenido, " + props.user: " "}</Nav.Link>
-    </Nav>
-  </Navbar.Collapse>
-</Navbar>
+  <NetContext.Consumer>
+    {context => (
+      <Navbar collapseOnSelect bg="light" expand="lg" style={{marginBottom:'10px'}}>
+      <Navbar.Brand as={Link} to={`/`} href="#home"><i class="fa fa-fw fa-home"></i>Home</Navbar.Brand>
+        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+        <Navbar.Collapse id="responsive-navbar-nav">
+          <Nav className="mr-auto"> 
+                 {!context.login && 
+                            <>
+                            <Nav.Link as={Link} to="/registro">Registro</Nav.Link>
+                            <Nav.Link as={Link} to="/login"><i class="fa fa-fw fa-user"></i>Login</Nav.Link>
+                            </>
+                  }
+                  {context.login && 
+                      <>
+                         <Nav.Link onClick={context.logout}>Logout</Nav.Link>
+                      </>
+                  }         
+          </Nav>
+          <Nav>
+          {context.login && 
+                    <>
+                      <Nav.Link>{context.login ? "Bienvenido, " + context.userEmail: " "}</Nav.Link>
+                      <Nav.Link as={Link} to="/cart" style={{color:'red'}}><i className="fa fa-shopping-cart"></i>{context.login ?  context.cartTotalItems: " "}</Nav.Link> 
+                    </>
+            }  
+                    
+          </Nav>
+        </Navbar.Collapse>
+      </Navbar>
+   )}
+   </NetContext.Consumer>
 )
 }
 

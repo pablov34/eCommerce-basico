@@ -8,35 +8,19 @@ import Login from './pages/Login'
 import Footer from './components/footer';
 import Home from './pages/Home'
 import Admin from './pages/Admin'
+import Cart from './pages/Cart'
 import PrivateRoute from './components/PrivateRoute';
-import PublicRoute from './components/PublicRoute';
-import Logout from './components/Logout'
-import { isLogin, getLoggedUser } from './utils/auth';
 import Detalle from './pages/Detalle'
+import GlobalState from './context/GlobalState';
 
 function App() {
-  const [autenticado, setAutenticado] = useState(false);
-  const [usuario, setUsuario] = useState('');
+// const [autenticado, setAutenticado] = useState(false);
+//  const [usuario, setUsuario] = useState('');
 
-  
-let setLoginState = () =>
-{
-  if(isLogin())
-  {
-    setAutenticado(true);
-    setUsuario(getLoggedUser());
-  }
-  else
-  {
-    setAutenticado(false);
-    setUsuario('');
-  }
-  console.log("setLoginState " + getLoggedUser())
-}
+
 
 useEffect(()=>{
     console.log('APP componentDidMount - hook equivalente');
-    setLoginState();
 }, []
 );
 
@@ -45,7 +29,8 @@ useEffect(()=>{
 }); 
 
 
-let _handleLoginSubmit = (email,pass) =>{
+/*NO SE USA
+  let _handleLoginSubmit = (email,pass) =>{
     //alert("login submit: " +  name + pass);
     console.log("recibiendo desde LOGIN submit: email " + email + "pass: " + pass)
     //codigo de manejo autenticacion
@@ -54,22 +39,26 @@ let _handleLoginSubmit = (email,pass) =>{
 
 let _handleLogoutSubmit = () =>{
   setLoginState();
-}
+}*/
 
   return (
+    //render={(props) => <Login handleLoginSubmit={_handleLoginSubmit} />}  
+    //render={(props) => <Logout handleLogoutSubmit={_handleLogoutSubmit} />}
     <div className="App">
-    <BrowserRouter >
-    <Menu isautenticado={autenticado} user={usuario}></Menu>
-        <Switch>
-            <PrivateRoute exact path="/" component={Home} />
-            <PrivateRoute exact path="/admin" component={Admin} />            
-            <Route path='/login' render={(props) => <Login handleLoginSubmit={_handleLoginSubmit} />} />
-            <Route path='/registro' component={Registro}/>
-            <Route path='/logout' render={(props) => <Logout handleLogoutSubmit={_handleLogoutSubmit} />}/>
-            <Route path='/detail/:productId' component={Detalle}></Route>
-        </Switch>
-    </BrowserRouter>
-    <Footer></Footer>
+      <GlobalState>
+        <BrowserRouter >
+        <Menu></Menu>
+            <Switch>
+                <PrivateRoute exact path="/" component={Home} />
+                <PrivateRoute exact path="/admin" component={Admin} />            
+                <Route path='/login'  component={Login} />  
+                <Route path='/registro' component={Registro}/>
+                <Route path='/detail/:productId' component={Detalle}></Route>
+                <PrivateRoute exact path="/cart" component={Cart} />     
+            </Switch>
+        </BrowserRouter>
+        <Footer></Footer>
+    </GlobalState>
     </div>
 
   );

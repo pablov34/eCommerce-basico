@@ -1,10 +1,9 @@
-import React, {useState} from 'react';
+import React, {useState, useRef } from 'react';
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import firebase from '../config/firebase'
 import Button from 'react-bootstrap/Button'
 import Alert from 'react-bootstrap/Alert'
-import { logout } from '../utils/auth';
 
 //**************************USING REACT-HOOK-FORM */
 //CONTIENE VALIDACION EN NUMERO TELEFONO*/
@@ -15,12 +14,15 @@ import { logout } from '../utils/auth';
 function Registro(props)
 {    
 //const history = useHistory();
-const {register, handleSubmit, errors}= useForm();
+const {register, handleSubmit, errors, watch}= useForm();
 const [form, setForm] = useState({nombre:'',apellido:'',email:'',telefono:'',password:'',confirmarPassword:''});
 const [mensaje, setMensaje] = useState('')
 const [showError, setshowError] = useState(false)
 const [show, setShow] = useState(false)
 const history = useHistory();
+
+const password = useRef();
+password.current = watch("password", "");
 
     let _handleSubmit = (formData) =>{
         //codigo de registro - consulta a backend     
@@ -65,7 +67,7 @@ const history = useHistory();
             [name] : value});      
     }
 
-    console.log("ERR", errors);
+    console.log("ERRORS", errors);
 
     return(
         <div>
@@ -81,19 +83,19 @@ const history = useHistory();
        </h3>
         <form id="form_contacto" name="form_contacto" onSubmit={handleSubmit(_handleSubmit)}>
             <div>
-                <label for="nombre">Nombre</label><br/>
-                <input type="text" name="nombre" classNameName="elemento" value={form.nombre} ref={register} onChange={_handleChange} />
+                <label htmlFor="nombre">Nombre</label><br/>
+                <input type="text" name="nombre" className="elemento" value={form.nombre} ref={register} onChange={_handleChange} />
             </div>
             <div>
-                <label for="apellido">Apellido</label><br/>
+                <label htmlFor="apellido">Apellido</label><br/>
                 <input type="text" name="apellido" className="elemento" value={form.apellido} ref={register} onChange={_handleChange}/>
             </div>
             <div>
-                <label for="email">Email</label><br/>
+                <label htmlFor="email">Email</label><br/>
                 <input type="email" name="email" value={form.email} onChange={_handleChange} ref={register} className="elemento"/>
             </div>
             <div>
-                <label for="telefono">Telefono</label><br/>
+                <label htmlFor="telefono">Telefono</label><br/>
                 <input type="text" 
                        name="telefono"
                        className="elemento" 
@@ -110,19 +112,29 @@ const history = useHistory();
                 {errors.telefono && <p><span className="error">{errors.telefono.message}</span></p>}
             </div>
             <div>
-                <label for="Password">Password</label><br/>
-                <input type="password" name="password" className="elemento" 
+                <label htmlFor="Password">Password</label><br/>
+                <input className="elemento" 
+                       name="password"
+                       type="password"                       
                        ref={register({ 
-                        required: {
-                        value:true,
-                        message:"Password es requerido"
-                        }
+                        required: "Password es requerido", 
+                        minLength: {
+                        value: 6,
+                        message: "Su password debe tener al menos 6 digitos"
+                        } 
                         })} />
                 {errors.password && <p><span className="error">{errors.password.message}</span></p>}
             </div>
             <div>
-                <label for="confirmarPassword">Confirmar Password</label><br/>
-                <input type="password" name="confirmarPassword" className="elemento"  ref={register} />
+                <label htmlFor="confirmarPassword">Confirmar Password</label><br/>
+                <input className="elemento" 
+                       name="confirmarpassword"
+                       type="password" 
+                       ref={register({
+                        validate: value =>
+                          value === password.current || "El passwords no coincide"
+                      })} />
+                {errors.confirmarpassword && <p><span className="error">{errors.confirmarpassword.message}</span></p>}
             </div>
             <div>
             <Button  variant="link" type="submit">Crear cuenta</Button>
