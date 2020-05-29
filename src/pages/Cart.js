@@ -35,6 +35,7 @@ function Cart()
     let arr = products
     if(indx != -1)
     { 
+      setLoaded(false) //mostrar el loading
       firebase.db.collection("/cart").doc(cartItemId).delete().
       then(function() {
         console.log("Document successfully deleted!");
@@ -44,6 +45,7 @@ function Cart()
         setProducts(arr); 
         setState({}); //FORZAR RE RENDERIZADO para actualizacion
         context.updateItemCount();
+        setLoaded(true) //ocultar el loading
       })
      .catch(function(error) {
         console.error("Error removing document: ", error);
@@ -63,7 +65,13 @@ function Cart()
             <Spinner  animation="grow" />                
         </Container>
     )
-    }else
+    }else if(products.length === 0)
+    {
+      return (<h3>
+        Aun no ha comprado nada
+      </h3>)
+    }
+    else
     {
       return( 
           <>
@@ -80,21 +88,21 @@ function Cart()
                     <th></th>
                     <th>Producto</th>
                     <th>Precio</th>
-                    <th></th>
+                    <th>Subtotal</th>
                   </tr>
                 </thead>
                 <tbody>
                   {products.map((prod) => 
                                      <tr key={prod.id}>
                                      <td><Button variant="danger" onClick={() => _handleDeleteItem(prod.id)}><i className="fa fa-trash-o fa-lg" aria-hidden="true"></i></Button></td>
-                                     <td>{prod.data().Nombre}</td>
+                                     <td className="tdprodname">{prod.data().Nombre}</td>
                                      <td>$ {prod.data().Precio}</td> 
                                      <td>$ {total = total + parseFloat(prod.data().Precio)}</td>                                   
                                      </tr>
                                      
                                 )
                   }
-                  <tr><td colSpan="3">TOTAL</td><td>$ {total}</td></tr>
+                  <tr><td colSpan="3" ><b>TOTAL</b></td><td><b>$ {total}</b></td></tr>
                 </tbody>
               </Table>
         </>

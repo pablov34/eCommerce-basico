@@ -12,6 +12,7 @@ import Cart from './pages/Cart'
 import PrivateRoute from './components/PrivateRoute';
 import Detalle from './pages/Detalle'
 import GlobalState from './context/GlobalState';
+import { NotFound } from './pages/NotFound'
 
 function App() {
 // const [autenticado, setAutenticado] = useState(false);
@@ -54,7 +55,8 @@ let _handleLogoutSubmit = () =>{
                 <Route path='/login'  component={Login} />  
                 <Route path='/registro' component={Registro}/>
                 <Route path='/detail/:productId' component={Detalle}></Route>
-                <PrivateRoute exact path="/cart" component={Cart} />     
+                <PrivateRoute exact path="/cart" component={Cart} />
+                <Route component={NotFound}></Route>     
             </Switch>
         </BrowserRouter>
         <Footer></Footer>

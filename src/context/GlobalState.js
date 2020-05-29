@@ -73,7 +73,8 @@ class GlobalState extends Component {
     totalitems--;
       this.setState({
       cartTotalItems: totalitems
-    })  
+    }) 
+    localStorage.setItem('cartTotalItems',totalitems)    
    }
 
   render() {
@@ -93,6 +94,6 @@ class GlobalState extends Component {
         {this.props.children}
       </NetContext.Provider>
     );
-  }
+   }
 }
 export default GlobalState;

@@ -87,7 +87,13 @@ margin:20px;
     object-fit: cover;
 }*/
 
-
+.table td {
+  text-align: right;
+}
+.tdprodname
+{
+  text-align: left !important;
+}
 
 @media screen and (min-width: 1024px) {
   .DivHeight{
