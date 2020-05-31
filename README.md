@@ -7,7 +7,8 @@ Registro<br>
 Login<br>
 Carro de la compra <br>
 
-Se utiliza Reactjs con hooks y Firebase como backend
+Se utiliza Reactjs con hooks, React Context  
+Firebase como backend
 
 http://pablovaccari-ecommercetp.surge.sh/
 
