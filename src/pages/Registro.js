@@ -1,7 +1,7 @@
 import React, {useState, useRef } from 'react';
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import firebase from '../config/firebase'
+import firebase from '../service/firebase'
 import Button from 'react-bootstrap/Button'
 import Alert from 'react-bootstrap/Alert'
 

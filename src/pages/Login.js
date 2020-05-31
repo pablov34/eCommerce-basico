@@ -1,6 +1,6 @@
 import React,{useState} from 'react';
 import { useHistory, Link } from "react-router-dom";
-import firebase from '../config/firebase'
+import firebase from '../service/firebase'
 import Alert from 'react-bootstrap/Alert';
 import  Button from 'react-bootstrap/Button'
 import NetContext from '../context/NetContext';

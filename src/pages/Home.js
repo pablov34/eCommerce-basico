@@ -1,5 +1,5 @@
 import React,{useState, useEffect} from 'react';
-import firebase from '../config/firebase';
+import {getProductos} from '../service/api'
 import Producto from '../components/Producto'
 import CardDeck from 'react-bootstrap/CardDeck'
 import { Container,Spinner,Alert } from 'react-bootstrap';
@@ -10,11 +10,9 @@ function Home()
   const [products, setProducts] = useState([]);
   const [loaded, setLoaded] = useState(false);
 
-
   useEffect(()=>{
     console.log('HOME componentDidMount - hook equivalente');
-    firebase.db.collection("productos")
-            .get()
+    getProductos()
             .then(querySnapshot=>{
                 setProducts( querySnapshot.docs )  
                 setLoaded(true) 

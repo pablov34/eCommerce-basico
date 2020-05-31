@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom'
-import firebase from '../config/firebase';
+import {getProductoById} from '../service/api'
 import {Alert, Container, CardGroup,Spinner, Card, Button} from 'react-bootstrap';
 import NetContext from '../context/NetContext';
 
@@ -17,8 +17,7 @@ function Detalle(props) {
     useEffect(
         () => {
         console.log('componentDidMount - hook equivalente');
-            firebase.db.doc("productos/"+ productId)
-            .get()
+        getProductoById(productId)
             .then(doc=>{
               setProducto( doc.data() )
               setLoaded(true); 

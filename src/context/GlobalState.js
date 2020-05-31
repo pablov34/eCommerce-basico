@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import NetContext from './NetContext';
-import firebase from '../config/firebase'
+import firebase from '../service/firebase'
 
 class GlobalState extends Component {
   totalitemfieldname;

@@ -1,5 +1,5 @@
 import React,{useState, useEffect, useContext} from 'react';
-import firebase from '../config/firebase';
+import {getCart, deleteCartItem} from '../service/api'
 import NetContext from '../context/NetContext';
 import { Table,Spinner, Container, Alert, Button } from 'react-bootstrap';
 
@@ -15,8 +15,7 @@ function Cart()
 
   useEffect(()=>{
     console.log('CART componentDidMount - hook equivalente');
-    firebase.db.collection("cart").where("userId", "==", context.userId)
-    .get()
+    getCart(context.userId)
     .then(querySnapshot=>{
         setProducts( querySnapshot.docs )  
         setLoaded(true) 
@@ -36,8 +35,8 @@ function Cart()
     if(indx != -1)
     { 
       setLoaded(false) //mostrar el loading
-      firebase.db.collection("/cart").doc(cartItemId).delete().
-      then(function() {
+      deleteCartItem(cartItemId)
+      .then(function() {
         console.log("Document successfully deleted!");
               
         console.log("actualiza setProducts"); 
