@@ -1,4 +1,4 @@
-## eCommerce con las siguientes paginas
+##Reactjs eCommerce con las siguientes paginas
 
 Home: Listado de 4 productos. 
 Mostrar nombre, precio, sku, descripcion <br>
