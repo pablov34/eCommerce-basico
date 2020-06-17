@@ -2,7 +2,7 @@ import React,{useState, useEffect} from 'react';
 import {getProductos} from '../service/api'
 import Producto from '../components/Producto'
 import CardDeck from 'react-bootstrap/CardDeck'
-import { Container,Spinner,Alert } from 'react-bootstrap';
+import { Container,Spinner } from 'react-bootstrap';
 
 
 function Home()

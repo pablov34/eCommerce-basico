@@ -38,7 +38,7 @@ return(
           {context.login && 
                     <>
                       <Nav.Link>{context.login ? "Bienvenido, " + context.userEmail: " "}</Nav.Link>
-                      <Nav.Link as={Link} to="/cart" style={{color:'red'}}><i className="fa fa-shopping-cart"></i></Nav.Link> 
+                      <Nav.Link as={Link} to="/cart" style={{color:'red'}}><i className="fa fa-shopping-cart"></i>{context.cart.length}</Nav.Link> 
                     </>
             }  
                     

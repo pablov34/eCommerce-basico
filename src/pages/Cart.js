@@ -5,7 +5,6 @@ import { Table,Spinner, Container, Alert, Button } from 'react-bootstrap';
 
 function Cart()
 {
-  const [products, setProducts] = useState([]);
   const [loaded, setLoaded] = useState(false);
   const [mensaje, setMensaje] = useState('')
   const [showError, setshowError] = useState(false)
@@ -15,42 +14,22 @@ function Cart()
 
   useEffect(()=>{
     console.log('CART componentDidMount - hook equivalente');
-    getCart(context.userId)
-    .then(querySnapshot=>{
-        setProducts( querySnapshot.docs )  
-        setLoaded(true) 
-    })
-    .catch(function(error) {
-      console.log("Error obteniendo productos: ", error);
-      setshowError(true);
-      setMensaje(`${error}`);
-    });
+    setLoaded(true);
     
   }, []);
 
   let _handleDeleteItem = (cartItemId) =>{
-    const indx = products.map((prod) => prod.id).indexOf(cartItemId);
-    console.log(indx);
-    let arr = products
-    if(indx != -1)
+    const indx = context.cart.map((prod) => prod.id).indexOf(cartItemId);
+   // console.log(indx);
+   // let arr = products
+    if(indx !== -1)
     { 
-      setLoaded(false) //mostrar el loading
-      deleteCartItem(cartItemId)
-      .then(function() {
+       setLoaded(false) //mostrar el loading
+       context.deleteFromCart(cartItemId)  //usando CONTEXT API
+
         console.log("Document successfully deleted!");
-              
-        console.log("actualiza setProducts"); 
-        arr.splice(indx, 1);
-        setProducts(arr); 
-        setState({}); //FORZAR RE RENDERIZADO para actualizacion
-        context.updateItemCount();
+
         setLoaded(true) //ocultar el loading
-      })
-     .catch(function(error) {
-        console.error("Error removing document: ", error);
-        setshowError(true);
-        setMensaje(`${error}`);
-     });
    }
   }
 
@@ -64,7 +43,7 @@ function Cart()
             <Spinner  animation="grow" />                
         </Container>
     )
-    }else if(products.length === 0)
+    }else if(context.cart.length === 0)
     {
       return (<h3>
         Aun no ha comprado nada
@@ -91,12 +70,12 @@ function Cart()
                   </tr>
                 </thead>
                 <tbody>
-                  {products.map((prod) => 
+                  {context.cart.map((prod) => 
                                      <tr key={prod.id}>
                                      <td><Button variant="danger" onClick={() => _handleDeleteItem(prod.id)}><i className="fa fa-trash-o fa-lg" aria-hidden="true"></i></Button></td>
-                                     <td className="tdprodname">{prod.data().Nombre}</td>
-                                     <td>$ {prod.data().Precio}</td> 
-                                     <td>$ {total = total + parseFloat(prod.data().Precio)}</td>                                   
+                                     <td className="tdprodname">{prod.Nombre}</td>
+                                     <td>$ {prod.Precio}</td> 
+                                     <td>$ {total = total + parseFloat(prod.Precio)}</td>                                   
                                      </tr>
                                      
                                 )

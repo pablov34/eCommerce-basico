@@ -16,7 +16,8 @@ function Detalle(props) {
 
     useEffect(
         () => {
-        console.log('componentDidMount - hook equivalente');
+        console.log('DETALLE-componentDidMount - hook equivalente');
+        console.log(context.cart.count)
         getProductoById(productId)
             .then(doc=>{
               setProducto( doc.data() )

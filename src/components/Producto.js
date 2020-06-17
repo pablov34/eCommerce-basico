@@ -14,7 +14,7 @@ function Producto(props){
   let handleAddItem = (e, context) =>{
     e.preventDefault(); //evitar comportamiento default
     console.log("Producto: add to carrito")
-    context.addToCart(props.id, props.datos)  
+    context.addToCart(props.id, props.datos)  //usando CONTEXT API
   }
 
     return(  
